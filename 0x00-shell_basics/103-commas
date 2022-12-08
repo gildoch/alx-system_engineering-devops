@@ -1,2 +1,2 @@
 #!/bin/bash
-103-commals -amp
+ls -pa | xargs echo | sed 's/ /, /g'
