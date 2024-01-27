@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Write a Bash script that kills the process 7-highlander.
+
+id=$(pgrep -f "bash ./7-highlander")
+
+if [[ -n $id ]]
+then
+    pkill -KILL -f "bash ./7-highlander"
+fi
