@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Returns to-do list information for a given employee ID."""
+import csv
 import requests
 import sys
-import csv
 
 if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/"
@@ -11,8 +11,15 @@ if __name__ == "__main__":
     todos = requests.get(url + "todos", params={"userId": user_id}).json()
 
     with open("{}.csv".format(user_id), "w", newline="") as f:
-        write = csv.writer(f, quoting=csv.QUOTE_ALL)
-        [writer.writerow(
-            [user_id, user.get("username"), task.get("completed"),
-                task.get("title")]
-        ) for task in todos]
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+        [
+            writer.writerow(
+                [
+                    user_id,
+                    user.get("username"),
+                    task.get("completed"),
+                    task.get("title"),
+                ]
+            )
+            for task in todos
+        ]
