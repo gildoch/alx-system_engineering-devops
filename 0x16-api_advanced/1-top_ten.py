@@ -1,21 +1,32 @@
 #!/usr/bin/python3
 """Fetch the top 10 hot posts from reddit"""
 
+import requests
+
 
 def top_ten(subreddit):
     """Method that retrieves the hot 10 post for a givem subreddit"""
-    import requests
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
 
-    subs = requests.get(
-        "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit),
-        headers={"User-Agent": "My-User-Agent"},
-        allow_redirects=False,
-    )
+    headers = {
+        "User-Agent": "MyRedditBot/0.1 (by u/GildoChauze;\
+              learning purposes)"
+    }
 
-    posts = subs.json().get("data").get("children")
+    params = {"limit": 10}
 
-    if subs.status_code >= 300:
-        return "None"
-    else:
-        for post in posts:
-            print(post.get("data").get("title"))
+    try:
+        response = requests.get(
+            url, headers=headers, params=params, allow_redirects=False
+        )
+
+        if response.status_code == 200:
+            data = response.json()
+            posts = data["data"]["children"]
+
+            for post in posts:
+                print(post["data"]["title"])
+        else:
+            print(None)
+    except requests.RequestException:
+        print(None)
