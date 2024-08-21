@@ -16,7 +16,7 @@ sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
 # Redirect to /redirect_me to a youtube video
-sed -i '37i\rewrite ^/redirect_me https://http.dev/404 permanent;' /etc/nginx/sites-available/default
+sed -i '47i\\tlocation /redirect_me { return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4; }' /etc/nginx/sites-available/default
 
 # Restart nginx after new configurations
 service nginx restart
